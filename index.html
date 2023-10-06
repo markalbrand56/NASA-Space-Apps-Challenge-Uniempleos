@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Laboratorio 6</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+
+    <style>
+        body {
+            background: radial-gradient(circle, transparent 25%, #ffffff  26%),linear-gradient(45deg, transparent 46%, #000000 47%, #000000 52%, transparent 53%), linear-gradient(135deg, transparent 46%, #000000 47%, #000000 52%, transparent 53%);
+            background-size: 3em 3em;
+            background-color: #ffffff;
+            opacity: 1
+        }
+    </style>
+</head>
+<body >
+    <div id="root"></div>
+    <script type="text/babel">
+        const Movements = ({score: movs}) => {
+            return (
+                <div
+                    style = {{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        width: '900px',
+                        height: '100px',
+                        alignItems: 'center',
+                        fontSize: '30px',
+                        color: 'black',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    <div>Movimientos: {movs}</div>
+                </div>
+            )
+        }
+
+        const Card = ({card, onClick}) => {
+            return (
+                <div
+                    style = {{
+                        backgroundImage: card.flipped ? `url(${card.face})` :  'url(./assets/img/bicycle_black_tiger.png)',
+                        backgroundSize: 'cover',
+                        backgroundPosition: 'center',
+                        height: '100%',
+                        width: '70%',
+                        borderRadius: '5px',
+                        cursor: 'pointer',
+                        transition: 'transform 0.3s',
+                        transform: card.flipped ? 'rotateY(0deg)' : 'rotateY(180deg)',
+                    }}
+                    onClick = {() => onClick(card.id)}
+                ></div>
+            )
+        }
+        const Board = () => {
+            const cards = [
+                {id: 1, face: './assets/img/f_1.jpg', flipped: true},
+                {id: 2, face: './assets/img/f_2.jpg', flipped: true},
+                {id: 3, face: './assets/img/f_3.jpg', flipped: true},
+                {id: 4, face: './assets/img/f_4.jpg', flipped: true},
+                {id: 5, face: './assets/img/f_5.jpg', flipped: true},
+                {id: 6, face: './assets/img/f_6.jpg', flipped: true},
+                {id: 7, face: './assets/img/f_7.jpg', flipped: true},
+                {id: 8, face: './assets/img/f_8.jpg', flipped: true},
+            ]
+
+            // const deck = [...cards, ...cards]
+            const [deck, setDeck] = React.useState([
+                ...cards,
+                ...cards.map(card => ({...card, id: card.id + 8}))
+            ])
+            const [movements, setMovements] = React.useState(0)
+            const [win, setWin] = React.useState(false)
+
+            React.useEffect(() => {
+                setDeck(prev => {
+                    const newDeck = prev.map(card => ({...card, flipped: false, found: false}))  // DEBUG
+                    newDeck.sort(() => Math.random() - 0.5)
+                    return newDeck
+                })
+            }, [])
+
+            const first_card = React.useRef(null)
+
+            const unFlip = (id_1, id_2) => {
+                setDeck(prev => {
+                    const newDeck = [...prev]
+                    newDeck.forEach( (i) => {
+                        if (i.id === id_1 || i.id === id_2) {
+                            i.flipped = false
+                        }}
+                    )
+                    return newDeck
+                })
+            }
+
+            const handleClick = (id) => {
+                console.log(id)
+                setDeck(prev => {
+                    const before = [...prev]
+                    const selected_card = prev.find(card => card.id === id)
+
+                    if (selected_card.found) return before
+
+                    selected_card.flipped = !selected_card.flipped  // Se le da la vuelta
+
+                    if (first_card.current === null) {
+                        first_card.current = selected_card
+                        return before
+                    }else{
+                        if (first_card.current.face === selected_card.face && first_card.current.id !== selected_card.id) {
+                            first_card.current.found = true
+                            selected_card.found = true
+
+                            console.log('Match')
+                            console.log(before)
+                            // verificar si todas las cartas estan encontradas
+                            const win = before.every(card => card.found)
+                            if (win) {
+                                console.log('You win')
+                                setWin(true)
+                            }
+                        }else{
+                            console.log(first_card.current.id)
+                            const fc_id = first_card.current.id
+                            setTimeout( () => {
+                                unFlip(fc_id, selected_card.id)
+                            }, 1000)
+                        }
+                        first_card.current = null
+                    }
+                    setMovements(prev => prev + 1)
+                    return before
+                })
+            }
+
+            return (
+                <div
+                    style = {{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        display: 'flex',
+                        flexDirection: 'column',
+                    }}
+                >
+                    {
+                        win &&
+                        <div style = {{
+                            fontSize: '50px',
+                            color: 'black',
+                            fontWeight: 'bold',
+                            marginBottom: '20px',
+                            background: 'white',
+                        }}>
+                            ¡Has ganado!
+                        </div>
+                    }
+                    <div
+                        style = {{
+                            background: 'none',
+                            width: '900px',
+                            height: '900px',
+                            display: 'grid',
+                            gap : '10px',
+                            gridTemplateColumns: 'repeat(4, 1fr)',
+                            gridTemplateRows: 'repeat(4, 1fr)',
+                        }}
+                    >
+                    {deck.map(card => <Card key={card.id} card={card} onClick={handleClick} />)}
+                </div>
+                <Movements score={movements} />
+
+                </div>
+            )
+        }
+
+        ReactDOM.render(<Board />, document.getElementById('root'))
+    </script>
+</body>
+</html>
