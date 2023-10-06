@@ -57,20 +57,20 @@
         const Board = () => {
             const cards = [
                 {id: 1, face: './assets/img/1.png', flipped: true},
-                {id: 2, face: './assets/img/2.png', flipped: true},
-                {id: 3, face: './assets/img/3.png', flipped: true},
-                {id: 4, face: './assets/img/4.png', flipped: true},
-                {id: 5, face: './assets/img/5.png', flipped: true},
-                {id: 6, face: './assets/img/6.png', flipped: true},
-                {id: 7, face: './assets/img/7.png', flipped: true},
-                {id: 8, face: './assets/img/8.png', flipped: true},
-                {id: 101, face: './assets/img/9.png', flipped: true},
-                {id: 102, face: './assets/img/10.png', flipped: true},
-                {id: 103, face: './assets/img/11.png', flipped: true},
-                {id: 104, face: './assets/img/12.png', flipped: true},
-                {id: 105, face: './assets/img/13.png', flipped: true},
-                {id: 106, face: './assets/img/14.png', flipped: true},
-                {id: 107, face: './assets/img/15.png', flipped: true},
+                {id: 101, face: './assets/img/2.png', flipped: true},
+                {id: 2, face: './assets/img/3.png', flipped: true},
+                {id: 102, face: './assets/img/4.png', flipped: true},
+                {id: 3, face: './assets/img/5.png', flipped: true},
+                {id: 103, face: './assets/img/6.png', flipped: true},
+                {id: 4, face: './assets/img/7.png', flipped: true},
+                {id: 104, face: './assets/img/8.png', flipped: true},
+                {id: 5, face: './assets/img/9.png', flipped: true},
+                {id: 105, face: './assets/img/10.png', flipped: true},
+                {id: 6, face: './assets/img/11.png', flipped: true},
+                {id: 106, face: './assets/img/12.png', flipped: true},
+                {id: 7, face: './assets/img/13.png', flipped: true},
+                {id: 107, face: './assets/img/14.png', flipped: true},
+                {id: 8, face: './assets/img/15.png', flipped: true},
                 {id: 108, face: './assets/img/16.png', flipped: true},
             ]
 
@@ -117,7 +117,7 @@
                         first_card.current = selected_card
                         return before
                     }else{
-                        if (first_card.current.id === (selected_card.id + 100) && first_card.current.id !== selected_card.id) {
+                        if (selected_card.id === (first_card.current.id + 100) && first_card.current.id !== selected_card.id) {
                             first_card.current.found = true
                             selected_card.found = true
 
