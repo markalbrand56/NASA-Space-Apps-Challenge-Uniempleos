@@ -24,15 +24,9 @@
 
         const Card = ({card, onClick}) => {
             return (
-                <div
+                <div className="Card"
                     style = {{
                         backgroundImage: card.flipped ? `url(${card.face})` :  'url(./assets/img/17.png)',
-                        backgroundSize: 'cover',
-                        backgroundPosition: 'center',
-                        aspectRatio: '2.5/3.5',
-                        borderRadius: '5px',
-                        cursor: 'pointer',
-                        transition: 'transform 0.3s',
                         transform: card.flipped ? 'rotateY(0deg)' : 'rotateY(180deg)',
                     }}
                     onClick = {() => onClick(card.id)}
@@ -102,14 +96,6 @@
                         first_card.current = selected_card
                         return before
                     }else{
-                        console.log("Selected card ID: " + selected_card.id)
-                        console.log("First card ID: " + first_card.current.id)
-
-                        // Verificar si la diferencia entre los IDs es 100 o -100
-                        console.log("SC === FC + 100: " + (selected_card.id === first_card.current.id + 100 || selected_card.id === first_card.current.id - 100));
-                        console.log("FC === SC + 100: " + (first_card.current.id === selected_card.id + 100 || first_card.current.id === selected_card.id - 100));
-
-
                         if (selected_card.id === first_card.current.id + 100 || selected_card.id === first_card.current.id - 100) {
                             first_card.current.found = true
                             selected_card.found = true
