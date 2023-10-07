@@ -102,7 +102,15 @@
                         first_card.current = selected_card
                         return before
                     }else{
-                        if (selected_card.id === (first_card.current.id + 100) && first_card.current.id !== selected_card.id) {
+                        console.log("Selected card ID: " + selected_card.id)
+                        console.log("First card ID: " + first_card.current.id)
+
+                        // Verificar si la diferencia entre los IDs es 100 o -100
+                        console.log("SC === FC + 100: " + (selected_card.id === first_card.current.id + 100 || selected_card.id === first_card.current.id - 100));
+                        console.log("FC === SC + 100: " + (first_card.current.id === selected_card.id + 100 || first_card.current.id === selected_card.id - 100));
+
+
+                        if (selected_card.id === first_card.current.id + 100 || selected_card.id === first_card.current.id - 100) {
                             first_card.current.found = true
                             selected_card.found = true
 
