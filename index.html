@@ -8,31 +8,15 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+    <link rel="stylesheet" type="text/css" href="styles.css">
 
-    <style>
-        body {
-            background-image: url(https://starwalk.space/gallery/images/the-brightest-stars/1140x641.jpg);
-        }
-    </style>
 </head>
 <body>
     <div id="root"></div>
     <script type="text/babel">
         const Movements = ({score: movs}) => {
             return (
-                <div
-                    style = {{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        width: '900px',
-                        height: '100px',
-                        alignItems: 'center',
-                        fontSize: '30px',
-                        color: 'white',
-                        fontWeight: 'bold',
-                    }}
-                >
+                <div className="Movements">
                     <div>Movimientos: {movs}</div>
                 </div>
             )
@@ -145,55 +129,21 @@
             }
 
             return (
-                <div
-                    style = {{
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        display: 'flex',
-                        flexDirection: 'column',
-                        height: '100%',
-                    }}
-                >
+                <div className="Board">
                     {
                         win &&
-                        <div style = {{
-                            fontSize: '50px',
-                            color: 'black',
-                            fontWeight: 'bold',
-                            marginBottom: '20px',
-                            background: 'white',
-                        }}>
+                        <div className="WinMessage">
                             ¡Has ganado!
                         </div>
                     }
-                    <h1 style = {{
-                            color: '#fff'
-                    }}>
+                    <h1>
                         Eclipses: Perspective is Everything
                     </h1>
-                    <div
-                        style = {{
-                            background: 'none',
-                            width: 'min(1800px, 100%)',
-                            height: '620px',
-                            display: 'grid',
-                            alignItems: 'center',
-                            gap : '10px',
-                            gridTemplateColumns: 'repeat(8, 1fr)',
-                            gridTemplateRows: 'repeat(2, 1fr)',
-                        }}
-                    >
+                    <div className="CardContainer">
                     {deck.map(card => <Card key={card.id} card={card} onClick={handleClick} />)}
                 </div>
                 <Movements score={movements} />
-                <footer
-                    style = {{
-                        color: 'white',
-                        fontSize: '20px',
-                        fontWeight: 'bold',
-                        marginTop: '20px',
-                    }}
-                >
+                <footer>
                     UniEmpleos
                 </footer>
                 </div>
