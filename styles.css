@@ -9,6 +9,7 @@ body {
     height: 100%;
 
     background-image: url(https://starwalk.space/gallery/images/the-brightest-stars/1140x641.jpg);
+    background-size: cover;
 }
 
 #root {
@@ -72,7 +73,7 @@ h1 {
 .CardContainer {
     background: none;
     width: min(1800px, 95%);
-    height: 620px;
+    height: 100%;
     display: grid;
     align-items: center;
     gap: 10px;
@@ -90,4 +91,18 @@ footer {
     margin: 1em 0;
 
     text-align: center;
+}
+
+@media (max-width: 1200px) {
+    .CardContainer {
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+    }
+}
+
+@media (max-width: 600px) {
+    .CardContainer {
+        grid-template-columns: repeat(2, 1fr);
+        grid-template-rows: repeat(8, 1fr);
+    }
 }
