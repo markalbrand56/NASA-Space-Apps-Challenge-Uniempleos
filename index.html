@@ -59,6 +59,7 @@
             ])
             const [movements, setMovements] = React.useState(0)
             const [win, setWin] = React.useState(false)
+            const [match, setMatch] = React.useState(false)
 
             React.useEffect(() => {
                 setDeck(prev => {
@@ -99,6 +100,11 @@
                         if (selected_card.id === first_card.current.id + 100 || selected_card.id === first_card.current.id - 100) {
                             first_card.current.found = true
                             selected_card.found = true
+                            setMatch(true)
+
+                            setTimeout( () => {
+                                setMatch(false)
+                            }, 2500)
 
                             console.log('Match')
                             console.log(before)
@@ -129,6 +135,36 @@
                         <div className="WinMessage">
                             ¡Has ganado!
                         </div>
+                    }
+                    {
+                        match && (
+                            <div
+                                style={{
+                                    position: "fixed",
+                                    width: "100%",
+                                    height: "100%",
+                                    overflow: "hidden",
+                                    top: 0,
+                                    left: 0,
+                                }}
+                            >
+                                {[...Array(100)].map((_, index) => (
+                                    <div
+                                        key={index}
+                                        className="Confetti"
+                                        style={{
+                                            position: "absolute",
+                                            width: "10px",
+                                            height: "10px",
+                                            backgroundColor: "#f1c40f",
+                                            transform: `translate(${Math.random() * 100}vw, ${Math.random() *
+                                                100}vh) rotate(${Math.random() * 360}deg)`,
+                                            animation: `confetti-fall ${Math.random() * 6 + 4}s ease infinite`,
+                                        }}
+                                    ></div>
+                                ))}
+                            </div>
+                        )
                     }
                     <h1>
                         UNI-ECLIPSE
